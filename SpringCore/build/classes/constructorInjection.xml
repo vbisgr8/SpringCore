@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="rN" class="IOC.DependencyInjection.example.StudentBean" >
+        <constructor-arg value="10" type="int" ></constructor-arg>
+    </bean>
+    <bean id="n" class="IOC.DependencyInjection.example.StudentBean" >
+        <constructor-arg value="vinayak" ></constructor-arg>
+    </bean>
+    <!-- ********** -->
+    <!-- If that same pattern constructor will not present and we not declare the type in <constrcutor-arg> then it will give run time exception (BeanCreationException: Error creating bean with name ####)
+        for example 
+            we configure as 1st value int and 2nd value String then constructor should present in the same pattern 
+            like : ***Bean(int, String)
+            If we configure as 1st String value and 2nd int value and ***Bean(String, Int) constructor is not present it will give run time exception
+    -->
+    <bean id="rnN" class="IOC.DependencyInjection.example.StudentBean" >
+        <constructor-arg value="10" ></constructor-arg>
+        <constructor-arg value="vinayak" ></constructor-arg>
+    </bean>
+    <bean id="nRn" class="IOC.DependencyInjection.example.StudentBean" >
+        <constructor-arg value="vinayak" ></constructor-arg>
+        <constructor-arg value="10" ></constructor-arg>
+    </bean>
+    <!-- ********** -->
+    <bean id="sDetails" class="IOC.DependencyInjection.example.SiblingsDetails" >
+        <constructor-arg value="Rahul"></constructor-arg>
+        <constructor-arg value="Prianka"></constructor-arg>
+    </bean>
+    <bean id="sDetails1" class="IOC.DependencyInjection.example.SiblingsDetails" >
+        <constructor-arg value="Sahil"></constructor-arg>
+        <constructor-arg value="Disha"></constructor-arg>
+    </bean>
+    <bean id="sDetails2" class="IOC.DependencyInjection.example.SiblingsDetails" >
+        <constructor-arg value="Vikrant"></constructor-arg>
+        <constructor-arg value="Ritu"></constructor-arg>
+    </bean>
+    <bean id="nRnSd" class="IOC.DependencyInjection.example.StudentBean" >
+        <constructor-arg value="Vinayak Bansal"></constructor-arg>
+        <constructor-arg value="224"></constructor-arg>
+        <constructor-arg>
+            <ref bean="sDetails"/>
+        </constructor-arg>
+    </bean>
+    <bean id="nRnSdLd" class="IOC.DependencyInjection.example.StudentBean" >
+        <constructor-arg value="Vinayak Bansal"></constructor-arg>
+        <constructor-arg value="224"></constructor-arg>
+        <constructor-arg>
+            <ref bean="sDetails"/>
+        </constructor-arg>
+        <constructor-arg>
+            <list>
+                <value>Java No1</value>
+                <value>Pythan No2</value>
+            </list>
+        </constructor-arg>
+    </bean>
+    <bean id="nRnSdlSD" class="IOC.DependencyInjection.example.StudentBean" >
+        <constructor-arg value="Vinayak Bansal"></constructor-arg>
+        <constructor-arg value="224"></constructor-arg>
+        <constructor-arg>
+            <ref bean="sDetails"/>
+        </constructor-arg>
+        <constructor-arg>
+            <list>
+                <value>Java No1</value>
+                <value>Pythan No2</value>
+                <!-- Dublicate value also we can give -->
+                <!-- <value>Java No1</value>  -->
+            </list>
+        </constructor-arg>
+        <constructor-arg>
+            <list>
+                <ref bean="sDetails1" />
+                <ref bean="sDetails2" />
+                <!-- Dublicate value also we can give -->
+                <ref bean="sDetails1" />
+            </list>
+        </constructor-arg>
+    </bean>
+    <bean id="nRnSdLd2" class="IOC.DependencyInjection.example.StudentBean" >
+        <constructor-arg value="Vinayak Bansal"></constructor-arg>
+        <constructor-arg value="224"></constructor-arg>
+        <constructor-arg>
+            <ref bean="sDetails"/>
+        </constructor-arg>
+        <constructor-arg>
+            <map>
+                <entry key="Java" value="No1" />
+                <entry key="Pythan" value="No2" />
+            </map>
+        </constructor-arg>
+    </bean>
+    <bean id="siblingDetails1" class="IOC.DependencyInjection.example.SiblingsDetails" >
+        <constructor-arg value="1"></constructor-arg>
+        <constructor-arg value="Rahul"></constructor-arg>
+        <constructor-arg value="Prianka"></constructor-arg>
+    </bean>
+    <bean id="siblingDetails2" class="IOC.DependencyInjection.example.SiblingsDetails" >
+        <constructor-arg value="2"></constructor-arg>
+        <constructor-arg value="Vikrant"></constructor-arg>
+        <constructor-arg value="Ritu"></constructor-arg>
+    </bean>
+    <bean id="dateOfBirthDetails1" class="IOC.DependencyInjection.example.DateOfBirthDetails" >
+        <constructor-arg value="1"></constructor-arg>
+        <constructor-arg value="08/07/1993"></constructor-arg> <!-- Default Format it consider as Month/Date/Year -->
+        <constructor-arg value="06/07/1991"></constructor-arg>
+    </bean>
+    <bean id="dateOfBirthDetails2" class="IOC.DependencyInjection.example.DateOfBirthDetails" >
+        <constructor-arg value="2"></constructor-arg>
+        <constructor-arg value="11/10/1996"></constructor-arg>
+        <constructor-arg value="11/9/1995"></constructor-arg>
+    </bean>
+    <bean id="nRnSdlSD2" class="IOC.DependencyInjection.example.StudentBean" parent="nRnSdLd2" > <!-- here parent argument working is take parent id variables plus these variables as well which we are going to declare now -->
+        <constructor-arg>
+            <map>
+                <entry key-ref="siblingDetails1" value-ref="dateOfBirthDetails1" />
+                <entry key-ref="siblingDetails2" value-ref="dateOfBirthDetails2" />
+            </map>
+        </constructor-arg>
+    </bean>
+    
+</beans>
